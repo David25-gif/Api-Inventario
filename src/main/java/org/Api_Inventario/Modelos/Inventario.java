@@ -25,8 +25,8 @@ public class Inventario {
     @Column(name = "IdProducto", nullable = false, unique = true)
     private Integer idProducto;
 
-    @Column(name = "CantidadActual", nullable = false)
-    private Integer cantidadActual;
+    @Column(name = "StockActual", nullable = false)
+    private Integer StockActual;
 
     @Column(name = "FechaActualizacion", nullable = false)
     private LocalDateTime fechaActualizacion;

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public record InventarioSalida(
         Integer idInventario,
         Integer idProducto,
-        Integer cantidadActual,
+        Integer stockActual,
         LocalDateTime fechaActualizacion
 ) implements Serializable {
 }
