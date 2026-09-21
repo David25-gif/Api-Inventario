@@ -1,45 +1,42 @@
 package org.Api_Inventario.dtos.MovimientoInventario;
 
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
-public record MovimientoInventarioGuardar (
+public record MovimientoInventarioGuardar(
 
-    @NotNull(message = "El tipo de movimiento es obligatorio.")
-    @Positive(message = "El tipo de movimiento debe ser mayor a 0.")
-    Integer idTipoMovimiento,
+        @NotNull(message = "El tipo de movimiento es obligatorio.")
+        @Positive(message = "El tipo de movimiento debe ser mayor a 0.")
+        Integer idTipoMovimiento,
 
-    @NotNull(message = "La cantidad es obligatoria.")
-    @Positive(message = "La cantidad debe ser mayor a 0.")
-    Integer cantidad,
+        @NotNull(message = "La cantidad es obligatoria.")
+        @Positive(message = "La cantidad debe ser mayor a 0.")
+        Integer cantidad,
 
-    @NotNull(message = "El costo unitario es obligatorio.")
-    @DecimalMin(value = "0.00", inclusive = true,
-            message = "El costo no puede ser negativo")
-    BigDecimal costoUnitario,
+        @NotNull(message = "El costo unitario es obligatorio.")
+        @DecimalMin(value = "0.0", inclusive = true,
+                message = "El costo unitario no puede ser negativo.")
+        BigDecimal costoUnitario,
 
-    @Size(max = 255,
-    message = "Las notas no pueden exeder los 255 caracteres.")
-    String notas,
+        @Size(max = 255,
+                message = "Las notas no pueden exceder los 255 caracteres.")
+        String notas,
 
-    @NotNull(message = "El usuario es obligatorio.")
-    @Positive(message = "El usuario debe ser mayot a 0.")
-    Integer creadoPorUsuario,
+        @NotNull(message = "El usuario es obligatorio.")
+        @Positive(message = "El usuario debe ser mayor a 0.")
+        Integer creadoPorUsuario,
 
-    @NotNull(message = "El inventario es obligatorio.")
-    @Positive(message = "El inventario debe ser mayor a 0")
-    Integer idInventario,
+        @NotNull(message = "El inventario es obligatorio.")
+        @Positive(message = "El inventario debe ser mayor a 0.")
+        Integer idInventario,
 
-    @Positive(message = "El detalle de documento debe ser mayor a 0.")
-    Integer idDetalleDocumento
+        @Positive(message = "El detalle del documento debe ser mayor a 0.")
+        Integer idDetalleDocumento
 ) {
+
     @JsonCreator
     public MovimientoInventarioGuardar(
 
@@ -58,11 +55,11 @@ public record MovimientoInventarioGuardar (
             @JsonProperty("createdByUser")
             Integer creadoPorUsuario,
 
-            @JsonProperty("InventoryId")
+            @JsonProperty("inventoryId")
             Integer idInventario,
 
             @JsonProperty("documentDetailId")
-            Integer idDetalleDocumento ){
+            Integer idDetalleDocumento) {
 
         this.idTipoMovimiento = idTipoMovimiento;
         this.cantidad = cantidad;
@@ -70,6 +67,6 @@ public record MovimientoInventarioGuardar (
         this.notas = notas;
         this.creadoPorUsuario = creadoPorUsuario;
         this.idInventario = idInventario;
-        this.idDetalleDocumento =  idDetalleDocumento;
+        this.idDetalleDocumento = idDetalleDocumento;
     }
 }

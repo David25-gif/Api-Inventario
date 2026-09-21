@@ -11,27 +11,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/movimiento-inventario")
+@RequestMapping("/api/movimientos-inventario")
 public class MovimientoInventarioControlador {
 
     private final IMovimientoInventarioServicios movimientoServicios;
 
     public MovimientoInventarioControlador(
             IMovimientoInventarioServicios movimientoServicios) {
+
         this.movimientoServicios = movimientoServicios;
     }
 
     @GetMapping
     public ResponseEntity<List<MovimientoInventarioSalida>> obtenerTodos() {
+
         return ResponseEntity.ok(
                 movimientoServicios.obtenerTodos()
         );
     }
 
-    @GetMapping("/inventario/id")
-    public  ResponseEntity<List<MovimientoInventarioSalida>>
+    @GetMapping("/{id}")
+    public ResponseEntity<MovimientoInventarioSalida> obtenerPorId(
+            @PathVariable Integer id) {
+
+        return movimientoServicios.obtenerPorId(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/inventario/{idInventario}")
+    public ResponseEntity<List<MovimientoInventarioSalida>>
     obtenerPorInventario(
             @PathVariable Integer idInventario) {
+
         return ResponseEntity.ok(
                 movimientoServicios.obtenerPorInventario(idInventario)
         );
@@ -40,7 +52,9 @@ public class MovimientoInventarioControlador {
     @PostMapping
     public ResponseEntity<MovimientoInventarioSalida> guardar(
             @Valid @RequestBody MovimientoInventarioGuardar dto) {
-        MovimientoInventarioSalida respuesta = movimientoServicios.guardar(dto);
+
+        MovimientoInventarioSalida respuesta =
+                movimientoServicios.guardar(dto);
 
         return new ResponseEntity<>(
                 respuesta,

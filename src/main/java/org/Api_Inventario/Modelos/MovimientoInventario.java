@@ -41,9 +41,12 @@ public class MovimientoInventario {
     private Integer creadoPorUsuario;
 
     @Column(name = "IdInventario", nullable = false)
-    private Integer inventario;
+    private Integer idInventario;
 
-    //La fecha se genera desde la API y no se recibe desde el cliente.
+    @Column(name = "IdDetalleDocumento")
+    private Integer idDetalleDocumento;
+
+    // La fecha se genera desde la API y no se recibe desde el cliente.
     @PrePersist
     public void asignarFechaCreacion() {
         if (fechaCreacion == null) {

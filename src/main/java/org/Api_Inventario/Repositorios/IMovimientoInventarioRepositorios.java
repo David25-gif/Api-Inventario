@@ -14,5 +14,5 @@ public interface IMovimientoInventarioRepositorios
     findByIdInventarioOrderByFechaCreacionDesc(Integer idInventario);
 
     List<MovimientoInventario>
-    findByTipoMovimientoOrderByFechaCreacionDesc(Integer idTipoMovimiento);
+    findByIdTipoMovimientoOrderByFechaCreacionDesc(Integer idTipoMovimiento);
 }
