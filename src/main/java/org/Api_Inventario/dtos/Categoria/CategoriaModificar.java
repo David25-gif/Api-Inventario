@@ -1,7 +1,5 @@
 package org.Api_Inventario.dtos.Categoria;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -14,19 +12,22 @@ public record CategoriaModificar(
         Integer idCategoria,
 
         @NotBlank(message = "El nombre es obligatorio.")
-        @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres.")
+        @Size(
+                min = 3,
+                max = 50,
+                message = "El nombre debe tener entre 3 y 50 caracteres."
+        )
         String nombre,
 
-        @Size(max = 255, message = "La descripción no puede exceder los 255 caracteres.")
-        String descripcion
+        @Size(
+                max = 255,
+                message = "La descripción no puede exceder los 255 caracteres."
+        )
+        String descripcion,
+
+        @NotNull(message = "El idEstado es obligatorio.")
+        @Positive(message = "El idEstado debe ser mayor a 0.")
+        Integer idEstado
+
 ) {
-    @JsonCreator
-    public CategoriaModificar(
-            @JsonProperty("id") Integer idCategoria,
-            @JsonProperty("name") String nombre,
-            @JsonProperty("description") String descripcion) {
-        this.idCategoria = idCategoria;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-    }
 }

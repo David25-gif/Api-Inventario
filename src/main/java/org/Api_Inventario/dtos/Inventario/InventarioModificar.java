@@ -10,8 +10,9 @@ public record InventarioModificar(
         @Positive(message = "El idInventario debe ser mayor a 0.")
         Integer idInventario,
 
-        @NotNull(message = "El stockActual es obligatorio.")
-        @PositiveOrZero(message = "El stockActual no puede ser negativo.")
-        Integer stockActual
+        @NotNull(message = "El stockMinimo es obligatorio.")
+        @PositiveOrZero(message = "El stockMinimo no puede ser negativo.")
+        Integer stockMinimo
+
 ) {
 }

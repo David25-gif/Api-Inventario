@@ -21,12 +21,17 @@ public class Inventario {
     @Column(name = "IdInventario")
     private Integer idInventario;
 
-    // Referencia simple mientras la entidad Producto no exista todavía.
+    // Cada producto mantiene un único registro de inventario.
     @Column(name = "IdProducto", nullable = false, unique = true)
     private Integer idProducto;
 
+    // Las existencias se actualizan mediante MovimientoInventario.
     @Column(name = "StockActual", nullable = false)
-    private Integer StockActual;
+    private Integer stockActual;
+
+    // Cantidad utilizada para identificar niveles bajos de inventario.
+    @Column(name = "StockMinimo", nullable = false)
+    private Integer stockMinimo;
 
     @Column(name = "FechaActualizacion", nullable = false)
     private LocalDateTime fechaActualizacion;

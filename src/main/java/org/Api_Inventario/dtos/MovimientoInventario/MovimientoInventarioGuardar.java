@@ -1,9 +1,6 @@
 package org.Api_Inventario.dtos.MovimientoInventario;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
-
 import java.math.BigDecimal;
 
 public record MovimientoInventarioGuardar(
@@ -35,38 +32,5 @@ public record MovimientoInventarioGuardar(
 
         @Positive(message = "El detalle del documento debe ser mayor a 0.")
         Integer idDetalleDocumento
-) {
 
-    @JsonCreator
-    public MovimientoInventarioGuardar(
-
-            @JsonProperty("movementTypeId")
-            Integer idTipoMovimiento,
-
-            @JsonProperty("quantity")
-            Integer cantidad,
-
-            @JsonProperty("unitCost")
-            BigDecimal costoUnitario,
-
-            @JsonProperty("notes")
-            String notas,
-
-            @JsonProperty("createdByUser")
-            Integer creadoPorUsuario,
-
-            @JsonProperty("inventoryId")
-            Integer idInventario,
-
-            @JsonProperty("documentDetailId")
-            Integer idDetalleDocumento) {
-
-        this.idTipoMovimiento = idTipoMovimiento;
-        this.cantidad = cantidad;
-        this.costoUnitario = costoUnitario;
-        this.notas = notas;
-        this.creadoPorUsuario = creadoPorUsuario;
-        this.idInventario = idInventario;
-        this.idDetalleDocumento = idDetalleDocumento;
-    }
-}
+) {}

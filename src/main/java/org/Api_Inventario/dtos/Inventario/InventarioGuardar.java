@@ -12,6 +12,11 @@ public record InventarioGuardar(
 
         @NotNull(message = "El stockActual es obligatorio.")
         @PositiveOrZero(message = "El stockActual no puede ser negativo.")
-        Integer stockActual
+        Integer stockActual,
+
+        @NotNull(message = "El stockMinimo es obligatorio.")
+        @PositiveOrZero(message = "El stockMinimo no puede ser negativo.")
+        Integer stockMinimo
+
 ) {
 }
