@@ -1,10 +1,7 @@
 package org.Api_Inventario.Seguridad.Modelos;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,36 +9,46 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "login"))
 public class Usuario implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String nombre;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    private String apellido;
+
+    private String telefono;
 
     @Column(nullable = false)
-    private String password;
+    private String login;
 
-    private String rol; // Ejemplo: "ADMIN", "USER"
+    private String clave;
+
+    @ManyToOne
+    @JoinColumn(name = "rol_id")
+    private Rol rol;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + this.rol));
+        return List.of(new SimpleGrantedAuthority((rol.getNombre())));
+    }
+
+    @Override
+    public String getPassword() {
+        return clave;
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return login;
     }
 
     @Override

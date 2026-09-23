@@ -14,12 +14,16 @@ public class UsuarioRegistro {
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
+    @NotBlank(message = "El nombre es obligatorio")
+    private String apellido;
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "El formato de email no es válido")
     private String email;
+    @NotBlank(message = "El nombre es obligatorio")
+    private String telefono;
 
     @NotBlank(message = "La contraseña es obligatoria")
     private String password;
 
-    private String rol; // Opcional (ejemplo: "USER" o "ADMIN")
+    private Integer rolId; // Opcional (ejemplo: "USER" o "ADMIN")
 }
