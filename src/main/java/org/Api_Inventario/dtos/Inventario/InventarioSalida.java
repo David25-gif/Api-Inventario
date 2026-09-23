@@ -7,6 +7,7 @@ public record InventarioSalida(
         Integer idInventario,
         Integer idProducto,
         Integer stockActual,
+        Integer stockMinimo,
         LocalDateTime fechaActualizacion
 ) implements Serializable {
 }

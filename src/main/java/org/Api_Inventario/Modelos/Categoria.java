@@ -24,4 +24,13 @@ public class Categoria {
 
     @Column(name = "Descripcion", length = 255)
     private String descripcion;
+
+    // Estado actual de la categoría.
+    // Permite desactivarla sin eliminar el registro de la BD.
+    @Column(name = "IdEstado", nullable = false)
+    private Integer idEstado;
+
+    // Usuario que creó originalmente la categoría.
+    @Column(name = "CreadoPorUsuario", nullable = false)
+    private Integer creadoPorUsuario;
 }

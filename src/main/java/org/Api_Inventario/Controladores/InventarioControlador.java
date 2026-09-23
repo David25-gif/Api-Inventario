@@ -3,8 +3,8 @@ package org.Api_Inventario.Controladores;
 import jakarta.validation.Valid;
 import org.Api_Inventario.Servicios.Interfaces.IInventarioServicios;
 import org.Api_Inventario.dtos.Inventario.InventarioGuardar;
-import org.Api_Inventario.dtos.Inventario.InventarioSalida;
 import org.Api_Inventario.dtos.Inventario.InventarioModificar;
+import org.Api_Inventario.dtos.Inventario.InventarioSalida;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,36 +17,50 @@ public class InventarioControlador {
 
     private final IInventarioServicios inventarioServicios;
 
-    public InventarioControlador(IInventarioServicios inventarioServicios) {
+    public InventarioControlador(
+            IInventarioServicios inventarioServicios) {
+
         this.inventarioServicios = inventarioServicios;
     }
 
     @GetMapping
     public ResponseEntity<List<InventarioSalida>> obtenerTodos() {
-        return ResponseEntity.ok(inventarioServicios.obtenerTodos());
+
+        return ResponseEntity.ok(
+                inventarioServicios.obtenerTodos()
+        );
     }
 
     @GetMapping("/producto/{idProducto}")
-    public ResponseEntity<InventarioSalida> obtenerPorProducto(@PathVariable Integer idProducto) {
-        return inventarioServicios.obtenerPorProducto(idProducto)
+    public ResponseEntity<InventarioSalida> obtenerPorProducto(
+            @PathVariable Integer idProducto) {
+
+        return inventarioServicios
+                .obtenerPorProducto(idProducto)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() ->
+                        ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<InventarioSalida> guardar(@Valid @RequestBody InventarioGuardar dto) {
-        InventarioSalida respuesta = inventarioServicios.guardar(dto);
-        return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
-    }
+    public ResponseEntity<InventarioSalida> guardar(
+            @Valid @RequestBody InventarioGuardar dto) {
 
-    @PatchMapping("/producto/{idProducto}/ajustar")
-    public ResponseEntity<InventarioSalida> ajustarStock(@PathVariable Integer idProducto,
-                                                         @RequestParam Integer cantidad) {
-        return ResponseEntity.ok(inventarioServicios.ajustarStock(idProducto, cantidad));
+        InventarioSalida respuesta =
+                inventarioServicios.guardar(dto);
+
+        return new ResponseEntity<>(
+                respuesta,
+                HttpStatus.CREATED
+        );
     }
 
     @PutMapping
-    public ResponseEntity<InventarioSalida> modificar(@Valid @RequestBody InventarioModificar dto) {
-        return ResponseEntity.ok(inventarioServicios.modificar(dto));
+    public ResponseEntity<InventarioSalida> modificar(
+            @Valid @RequestBody InventarioModificar dto) {
+
+        return ResponseEntity.ok(
+                inventarioServicios.modificar(dto)
+        );
     }
 }
