@@ -1,12 +1,14 @@
 package org.Api_Inventario.Controladores;
 
 import jakarta.validation.Valid;
+import org.Api_Inventario.Seguridad.Modelos.Usuario;
 import org.Api_Inventario.Servicios.Interfaces.IProductoServicios;
 import org.Api_Inventario.dtos.Producto.ProductoGuardar;
 import org.Api_Inventario.dtos.Producto.ProductoModificar;
 import org.Api_Inventario.dtos.Producto.ProductoSalida;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,9 +41,20 @@ public class ProductoControlador {
     }
 
     @PostMapping
-    public ResponseEntity<ProductoSalida> guardar(@Valid @RequestBody ProductoGuardar dto) {
-        ProductoSalida respuesta = productoServicios.guardar(dto);
-        return new ResponseEntity<>(respuesta, HttpStatus.CREATED);
+    public ResponseEntity<ProductoSalida> guardar(
+            @Valid @RequestBody ProductoGuardar dto,
+            @AuthenticationPrincipal Usuario usuario) {
+
+        ProductoSalida respuesta =
+                productoServicios.guardar(
+                        dto,
+                        usuario.getIdUsuario()
+                );
+
+        return new ResponseEntity<>(
+                respuesta,
+                HttpStatus.CREATED
+        );
     }
 
     @PutMapping

@@ -1,5 +1,6 @@
 package org.Api_Inventario.dtos.MovimientoInventario;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -13,8 +14,6 @@ public record MovimientoInventarioSalida(
         LocalDateTime fechaCreacion,
         Integer creadoPorUsuario,
         Integer idInventario,
-        Integer idDetalleDocumento,
-        Integer stockAnterior,
-        Integer stockNuevo
+        Integer idDetalleDocumento
 
-) {}
+) implements Serializable {}

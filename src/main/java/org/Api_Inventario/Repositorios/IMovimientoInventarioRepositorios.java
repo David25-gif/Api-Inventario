@@ -10,9 +10,5 @@ import java.util.List;
 public interface IMovimientoInventarioRepositorios
         extends JpaRepository<MovimientoInventario, Integer> {
 
-    List<MovimientoInventario>
-    findByIdInventarioOrderByFechaCreacionDesc(Integer idInventario);
-
-    List<MovimientoInventario>
-    findByIdTipoMovimientoOrderByFechaCreacionDesc(Integer idTipoMovimiento);
+    List<MovimientoInventario> findByIdInventario(Integer idInventario);
 }

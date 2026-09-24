@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "MovimientoInventario")
+@Table(name = "InventoryMovement")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,31 +19,36 @@ public class MovimientoInventario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdMovimientoInventario")
+    @Column(name = "InventoryMovementId")
     private Integer idMovimientoInventario;
 
-    @Column(name = "IdTipoMovimiento", nullable = false)
+    @Column(name = "MovementTypeId", nullable = false)
     private Integer idTipoMovimiento;
 
-    @Column(name = "Cantidad", nullable = false)
+    @Column(name = "Quantity", nullable = false)
     private Integer cantidad;
 
-    @Column(name = "CostoUnitario", nullable = false, precision = 10, scale = 2)
+    @Column(name = "UnitCost", nullable = false, precision = 10, scale = 2)
     private BigDecimal costoUnitario;
 
-    @Column(name = "Notas", length = 255)
+    @Column(name = "Notes", length = 255)
     private String notas;
 
-    @Column(name = "FechaCreacion", nullable = false)
+    @Column(name = "CreatedAt", nullable = false)
     private LocalDateTime fechaCreacion;
 
-    @Column(name = "CreadoPorUsuario", nullable = false)
+    @Column(name = "CreatedByUser", nullable = false)
     private Integer creadoPorUsuario;
 
-    @Column(name = "IdInventario", nullable = false)
+    @Column(name = "InventoryId", nullable = false)
     private Integer idInventario;
 
-    @Column(name = "IdDetalleDocumento")
+    /*
+     * Este ID proviene del sistema de C#.
+     * No se necesita tener DetalleDocumento como entidad en esta API.
+     * Puede ser null para movimientos manuales.
+     */
+    @Column(name = "DocumentDetailId")
     private Integer idDetalleDocumento;
 
     // La fecha se genera desde la API y no se recibe desde el cliente.

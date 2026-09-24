@@ -6,10 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Inventario")
+@Table(name = "Inventory")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,21 +19,38 @@ public class Inventario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "IdInventario")
+    @Column(name = "InventoryId")
     private Integer idInventario;
 
-    // Cada producto mantiene un único registro de inventario.
-    @Column(name = "IdProducto", nullable = false, unique = true)
-    private Integer idProducto;
+    @Column(name = "PurchasePrice", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioCompra;
 
-    // Las existencias se actualizan mediante MovimientoInventario.
-    @Column(name = "StockActual", nullable = false)
-    private Integer stockActual;
+    @Column(name = "SalePrice", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioVenta;
 
     // Cantidad utilizada para identificar niveles bajos de inventario.
-    @Column(name = "StockMinimo", nullable = false)
+    @Column(name = "MinimumStock", nullable = false)
     private Integer stockMinimo;
 
-    @Column(name = "FechaActualizacion", nullable = false)
-    private LocalDateTime fechaActualizacion;
+    // Las existencias se actualizan mediante MovimientoInventario.
+    @Column(name = "CurrentStock", nullable = false)
+    private Integer stockActual;
+
+    // Cada producto mantiene un único registro de inventario.
+    @Column(name = "ProductId", nullable = false, unique = true)
+    private Integer idProducto;
+
+    @Column(name = "CreatedAt", nullable = false)
+    private LocalDateTime fechaCreacion;
+
+    @Column(name = "StatusId", nullable = false)
+    private Integer idEstado;
+
+    // La fecha se genera desde la API y no se recibe desde el cliente.
+    @PrePersist
+    public void asignarFechaCreacion() {
+        if (fechaCreacion == null) {
+            fechaCreacion = LocalDateTime.now();
+        }
+    }
 }

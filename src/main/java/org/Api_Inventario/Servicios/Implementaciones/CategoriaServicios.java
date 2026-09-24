@@ -42,7 +42,8 @@ public class CategoriaServicios implements ICategoriaServicios {
 
     @Override
     @Transactional
-    public CategoriaSalida guardar(CategoriaGuardar dto) {
+    public CategoriaSalida guardar(CategoriaGuardar dto,
+                                   Integer idUsuario) {
 
         // El nombre de la categoría debe ser único.
         if (categoriaRepositorio.existsByNombre(dto.nombre())) {
@@ -55,8 +56,10 @@ public class CategoriaServicios implements ICategoriaServicios {
 
         categoria.setNombre(dto.nombre());
         categoria.setDescripcion(dto.descripcion());
-        categoria.setIdEstado(dto.idEstado());
-        categoria.setCreadoPorUsuario(dto.creadoPorUsuario());
+        //Estado "Activo" por defecto.
+        categoria.setIdEstado(1);
+        //Se asigna el usuario logueado
+        categoria.setCreadoPorUsuario(idUsuario);
 
         Categoria guardada =
                 categoriaRepositorio.save(categoria);

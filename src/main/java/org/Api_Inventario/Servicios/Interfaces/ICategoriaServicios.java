@@ -13,7 +13,7 @@ public interface ICategoriaServicios {
 
     Optional<CategoriaSalida> obtenerPorId(Integer id);
 
-    CategoriaSalida guardar(CategoriaGuardar dto);
+    CategoriaSalida guardar(CategoriaGuardar dto, Integer idUsuario);
 
     CategoriaSalida modificar(CategoriaModificar dto);
 

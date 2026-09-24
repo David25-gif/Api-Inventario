@@ -21,16 +21,8 @@ public record ProductoGuardar(
         @Size(max = 500, message = "La URL de la imagen no puede exceder los 500 caracteres.")
         String imagenUrl,
 
-        @NotNull(message = "El idEstado es obligatorio.")
-        @Positive(message = "El idEstado debe ser mayor a 0.")
-        Integer idEstado,
-
         @NotNull(message = "El idCategoria es obligatorio.")
         @Positive(message = "El idCategoria debe ser mayor a 0.")
-        Integer idCategoria,
-
-        @NotNull(message = "El usuario es obligatorio.")
-        @Positive(message = "El usuario debe ser mayor a 0.")
-        Integer creadoPorUsuario
+        Integer idCategoria
 ) {
 }

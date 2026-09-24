@@ -47,22 +47,26 @@ public class InventarioServicios implements IInventarioServicios {
     @Transactional
     public InventarioSalida guardar(InventarioGuardar dto) {
 
-        // Un producto no debe tener más de un registro de inventario.
+        // Cada producto debe tener un único registro de inventario.
         if (inventarioRepositorio
                 .findByIdProducto(dto.idProducto())
                 .isPresent()) {
 
             throw new IllegalArgumentException(
                     "Ya existe un registro de inventario para el producto "
-                            + dto.idProducto());
+                            + dto.idProducto()
+            );
         }
 
         Inventario inventario = new Inventario();
 
         inventario.setIdProducto(dto.idProducto());
+        inventario.setPrecioCompra(dto.precioCompra());
+        inventario.setPrecioVenta(dto.precioVenta());
         inventario.setStockActual(dto.stockActual());
         inventario.setStockMinimo(dto.stockMinimo());
-        inventario.setFechaActualizacion(LocalDateTime.now());
+        inventario.setIdEstado(1);
+        inventario.setFechaCreacion(LocalDateTime.now());
 
         Inventario guardado =
                 inventarioRepositorio.save(inventario);
@@ -79,15 +83,19 @@ public class InventarioServicios implements IInventarioServicios {
                 .orElseThrow(() ->
                         new IllegalArgumentException(
                                 "No existe un inventario con id "
-                                        + dto.idInventario()));
+                                        + dto.idInventario()
+                        )
+                );
 
         /*
          * El stock actual no se modifica desde este método.
-         * Las entradas y salidas deben quedar registradas
-         * mediante MovimientoInventario.
+         * Las entradas y salidas deben realizarse mediante
+         * MovimientoInventario para conservar el historial.
          */
+        inventario.setPrecioCompra(dto.precioCompra());
+        inventario.setPrecioVenta(dto.precioVenta());
         inventario.setStockMinimo(dto.stockMinimo());
-        inventario.setFechaActualizacion(LocalDateTime.now());
+        inventario.setIdEstado(dto.idEstado());
 
         Inventario guardado =
                 inventarioRepositorio.save(inventario);
@@ -100,9 +108,12 @@ public class InventarioServicios implements IInventarioServicios {
         return new InventarioSalida(
                 entidad.getIdInventario(),
                 entidad.getIdProducto(),
+                entidad.getPrecioCompra(),
+                entidad.getPrecioVenta(),
                 entidad.getStockActual(),
                 entidad.getStockMinimo(),
-                entidad.getFechaActualizacion()
+                entidad.getIdEstado(),
+                entidad.getFechaCreacion()
         );
     }
 }

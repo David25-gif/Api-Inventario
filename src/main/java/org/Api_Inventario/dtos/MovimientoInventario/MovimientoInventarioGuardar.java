@@ -1,6 +1,9 @@
 package org.Api_Inventario.dtos.MovimientoInventario;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.math.BigDecimal;
 
 public record MovimientoInventarioGuardar(
@@ -14,23 +17,20 @@ public record MovimientoInventarioGuardar(
         Integer cantidad,
 
         @NotNull(message = "El costo unitario es obligatorio.")
-        @DecimalMin(value = "0.0", inclusive = true,
-                message = "El costo unitario no puede ser negativo.")
+        @DecimalMin(value = "0.0", inclusive = true, message = "El costo unitario no puede ser negativo.")
         BigDecimal costoUnitario,
 
-        @Size(max = 255,
-                message = "Las notas no pueden exceder los 255 caracteres.")
         String notas,
-
-        @NotNull(message = "El usuario es obligatorio.")
-        @Positive(message = "El usuario debe ser mayor a 0.")
-        Integer creadoPorUsuario,
 
         @NotNull(message = "El inventario es obligatorio.")
         @Positive(message = "El inventario debe ser mayor a 0.")
         Integer idInventario,
 
-        @Positive(message = "El detalle del documento debe ser mayor a 0.")
+        /*
+         * Referencia opcional al detalle de documento creado en C#.
+         * Para movimientos manuales puede ser null.
+         */
         Integer idDetalleDocumento
 
-) {}
+) {
+}

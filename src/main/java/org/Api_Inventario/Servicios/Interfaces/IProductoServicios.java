@@ -11,6 +11,6 @@ public interface IProductoServicios {
     List<ProductoSalida> obtenerTodos();
     Optional<ProductoSalida> obtenerPorId(Integer id);
     List<ProductoSalida> obtenerPorCategoria(Integer idCategoria);
-    ProductoSalida guardar(ProductoGuardar dto);
+    ProductoSalida guardar(ProductoGuardar dto, Integer idUsuario);
     ProductoSalida modificar(ProductoModificar dto);
 }

@@ -8,26 +8,14 @@ import jakarta.validation.constraints.Size;
 public record CategoriaGuardar(
 
         @NotBlank(message = "El nombre es obligatorio.")
-        @Size(
-                min = 3,
-                max = 50,
+        @Size(min = 3, max = 50,
                 message = "El nombre debe tener entre 3 y 50 caracteres."
         )
         String nombre,
 
-        @Size(
-                max = 255,
-                message = "La descripción no puede exceder los 255 caracteres."
+        @Size(max = 255,message = "La descripción no puede exceder los 255 caracteres."
         )
-        String descripcion,
-
-        @NotNull(message = "El idEstado es obligatorio.")
-        @Positive(message = "El idEstado debe ser mayor a 0.")
-        Integer idEstado,
-
-        @NotNull(message = "El usuario creador es obligatorio.")
-        @Positive(message = "El usuario creador debe ser mayor a 0.")
-        Integer creadoPorUsuario
+        String descripcion
 
 ) {
 }

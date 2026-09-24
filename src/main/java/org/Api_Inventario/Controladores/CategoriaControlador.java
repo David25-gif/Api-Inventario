@@ -1,12 +1,14 @@
 package org.Api_Inventario.Controladores;
 
 import jakarta.validation.Valid;
+import org.Api_Inventario.Seguridad.Modelos.Usuario;
 import org.Api_Inventario.Servicios.Interfaces.ICategoriaServicios;
 import org.Api_Inventario.dtos.Categoria.CategoriaGuardar;
 import org.Api_Inventario.dtos.Categoria.CategoriaModificar;
 import org.Api_Inventario.dtos.Categoria.CategoriaSalida;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,10 +48,13 @@ public class CategoriaControlador {
     // Registra una nueva categoría.
     @PostMapping
     public ResponseEntity<CategoriaSalida> guardar(
-            @Valid @RequestBody CategoriaGuardar dto) {
+            @Valid @RequestBody CategoriaGuardar dto,
+            @AuthenticationPrincipal Usuario usuario) {
 
         CategoriaSalida respuesta =
-                categoriaServicios.guardar(dto);
+                categoriaServicios.guardar(dto,
+                        usuario.getIdUsuario()
+                );
 
         return new ResponseEntity<>(
                 respuesta,

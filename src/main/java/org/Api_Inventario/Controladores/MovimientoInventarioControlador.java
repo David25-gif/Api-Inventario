@@ -1,11 +1,13 @@
 package org.Api_Inventario.Controladores;
 
 import jakarta.validation.Valid;
+import org.Api_Inventario.Seguridad.Modelos.Usuario;
 import org.Api_Inventario.Servicios.Interfaces.IMovimientoInventarioServicios;
 import org.Api_Inventario.dtos.MovimientoInventario.MovimientoInventarioGuardar;
 import org.Api_Inventario.dtos.MovimientoInventario.MovimientoInventarioSalida;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +25,8 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping
-    public ResponseEntity<List<MovimientoInventarioSalida>> obtenerTodos() {
+    public ResponseEntity<List<MovimientoInventarioSalida>>
+    obtenerTodos() {
 
         return ResponseEntity.ok(
                 movimientoServicios.obtenerTodos()
@@ -31,12 +34,14 @@ public class MovimientoInventarioControlador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovimientoInventarioSalida> obtenerPorId(
-            @PathVariable Integer id) {
+    public ResponseEntity<MovimientoInventarioSalida>
+    obtenerPorId(@PathVariable Integer id) {
 
         return movimientoServicios.obtenerPorId(id)
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() ->
+                        ResponseEntity.notFound().build()
+                );
     }
 
     @GetMapping("/inventario/{idInventario}")
@@ -45,16 +50,21 @@ public class MovimientoInventarioControlador {
             @PathVariable Integer idInventario) {
 
         return ResponseEntity.ok(
-                movimientoServicios.obtenerPorInventario(idInventario)
+                movimientoServicios
+                        .obtenerPorInventario(idInventario)
         );
     }
 
     @PostMapping
     public ResponseEntity<MovimientoInventarioSalida> guardar(
-            @Valid @RequestBody MovimientoInventarioGuardar dto) {
+            @Valid @RequestBody MovimientoInventarioGuardar dto,
+            @AuthenticationPrincipal Usuario usuario) {
 
         MovimientoInventarioSalida respuesta =
-                movimientoServicios.guardar(dto);
+                movimientoServicios.guardar(
+                        dto,
+                        usuario.getIdUsuario()
+                );
 
         return new ResponseEntity<>(
                 respuesta,

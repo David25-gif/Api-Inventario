@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,29 +17,54 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(
-        name = "usuarios",
-        uniqueConstraints = @UniqueConstraint(columnNames = "login")
+        name = "Users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "UserName"),
+                @UniqueConstraint(columnNames = "Email"),
+                @UniqueConstraint(columnNames = "PersonId")
+        }
 )
 public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "UserId")
+    private Integer idUsuario;
 
-    private String nombre;
-
-    private String apellido;
-
-    private String telefono;
-
-    @Column(nullable = false)
+    @Column(name = "UserName", nullable = false, length = 50)
     private String login;
 
+    @Column(name = "Email", nullable = false, length = 255)
+    private String email;
+
+    @Column(name = "PasswordHash", nullable = false, length = 255)
     private String clave;
 
-    @ManyToOne
-    @JoinColumn(name = "RolId")
+    @Column(name = "CreatedAt", nullable = false)
+    private LocalDateTime fechaCreacion;
+
+    @Column(name = "TempPasswordHash", length = 255)
+    private String claveTemporal;
+
+    @Column(name = "TempPasswordExpiry")
+    private LocalDateTime expiracionClaveTemporal;
+
+    /*
+     * Se mantiene la relación con Rol porque Spring Security
+     * necesita conocer el rol del usuario autenticado.
+     */
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "RolId", nullable = false)
     private Rol rol;
+
+    /*
+     * Se captura el IdPersona en transaccion.
+     */
+    @Column(name = "PersonId", nullable = false)
+    private Integer idPersona;
+
+    @Column(name = "StatusId", nullable = false)
+    private Integer idEstado;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

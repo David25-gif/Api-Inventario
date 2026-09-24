@@ -14,5 +14,8 @@ public interface IMovimientoInventarioServicios {
 
     List<MovimientoInventarioSalida> obtenerPorInventario(Integer idInventario);
 
-    MovimientoInventarioSalida guardar(MovimientoInventarioGuardar dto);
+    MovimientoInventarioSalida guardar(
+            MovimientoInventarioGuardar dto,
+            Integer idUsuario
+    );
 }

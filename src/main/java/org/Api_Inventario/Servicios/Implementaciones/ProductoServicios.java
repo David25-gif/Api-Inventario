@@ -52,7 +52,8 @@ public class ProductoServicios implements IProductoServicios {
 
     @Override
     @Transactional
-    public ProductoSalida guardar(ProductoGuardar dto) {
+    public ProductoSalida guardar(ProductoGuardar dto,
+                                  Integer idUsuario) {
         validarCategoriaExiste(dto.idCategoria());
 
         if (productoRepositorio.existsByCodigoBarras(dto.codigoBarras())) {
@@ -64,9 +65,12 @@ public class ProductoServicios implements IProductoServicios {
         producto.setDescripcion(dto.descripcion());
         producto.setCodigoBarras(dto.codigoBarras());
         producto.setImagenUrl(dto.imagenUrl());
-        producto.setIdEstado(dto.idEstado());
+        //Estado "Activo" por defecto.
+        producto.setIdEstado(1);
         producto.setIdCategoria(dto.idCategoria());
-        producto.setCreadoPorUsuario(dto.creadoPorUsuario());
+
+        //Se asigna el usuario logueado automaticamente.
+        producto.setCreadoPorUsuario(idUsuario);
         // fechaCreacion se asigna en @PrePersist
 
         Producto guardado = productoRepositorio.save(producto);
