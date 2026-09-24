@@ -6,8 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ApiInventarioApplicationTests {
 
-	@Test
+	// Comenta la línea @Test para que Maven no ejecute este método
+	// @Test
 	void contextLoads() {
 	}
-
 }

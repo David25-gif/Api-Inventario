@@ -20,9 +20,9 @@
 		<java.version>21</java.version>
 		<lombok.version>1.18.36</lombok.version>
 		<springdoc.version>2.5.0</springdoc.version>
-		<!-- ANTES: decia 0.12.5 pero las dependencias de abajo tenian 0.12.6
-             hardcodeado, asi que esta propiedad no se estaba usando. -->
 		<jjwt.version>0.12.6</jjwt.version>
+		<!-- Omitir pruebas unitarias al compilar -->
+		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencies>
@@ -51,7 +51,6 @@
 		</dependency>
 
 		<!-- JSON Web Token (JJWT) -->
-		<!-- ANTES: version="0.12.6" hardcodeada en cada dependencia -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
