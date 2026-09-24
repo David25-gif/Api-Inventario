@@ -15,8 +15,12 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "login"))
+@Table(
+        name = "usuarios",
+        uniqueConstraints = @UniqueConstraint(columnNames = "login")
+)
 public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,12 +37,18 @@ public class Usuario implements UserDetails {
     private String clave;
 
     @ManyToOne
-    @JoinColumn(name = "rol_id")
+    @JoinColumn(name = "RolId")
     private Rol rol;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority((rol.getNombre())));
+
+        // Spring Security trabaja con el prefijo ROLE_ al utilizar hasRole().
+        return List.of(
+                new SimpleGrantedAuthority(
+                        "ROLE_" + rol.getNombre().toUpperCase()
+                )
+        );
     }
 
     @Override

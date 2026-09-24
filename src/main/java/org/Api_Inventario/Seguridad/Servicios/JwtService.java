@@ -23,11 +23,11 @@ public class JwtService {
     private String SECRET_KEY;
 
     public String getToken(Usuario usuario) {
-        List<String> roles = new ArrayList<>();
-        roles.add(usuario.getRol().getNombre());
+        List<String> rol = new ArrayList<>();
+        rol.add(usuario.getRol().getNombre());
 
         HashMap<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("roles", roles);
+        extraClaims.put("rol", rol);
         return  generarToken(extraClaims, usuario);
     }
 

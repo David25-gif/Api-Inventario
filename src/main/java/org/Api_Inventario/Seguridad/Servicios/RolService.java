@@ -5,20 +5,25 @@ import org.Api_Inventario.Seguridad.Modelos.Rol;
 import org.Api_Inventario.Seguridad.Repositorio.RolRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class RolService {
+
     @Autowired
     private RolRepositorio rolRepositorio;
 
-    public List<Rol> obtenerRoles(){
+    public List<Rol> obtenerRoles() {
         return rolRepositorio.findAll();
     }
 
-    // ANTES: usaba .get() directo, lanzaba NoSuchElementException sin mensaje util
-    public Rol obtenerPorId(Integer id){
-        return rolRepositorio.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("El rol con id " + id + " no existe"));
+    public Rol obtenerPorId(Integer rolId) {
+        return rolRepositorio.findById(rolId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException(
+                                "El rol con id " + rolId + " no existe"
+                        )
+                );
     }
 }
