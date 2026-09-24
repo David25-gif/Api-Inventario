@@ -1,5 +1,6 @@
 package org.Api_Inventario.Seguridad.Servicios;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.Api_Inventario.Seguridad.Modelos.Rol;
 import org.Api_Inventario.Seguridad.Repositorio.RolRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ public class RolService {
         return rolRepositorio.findAll();
     }
 
+    // ANTES: usaba .get() directo, lanzaba NoSuchElementException sin mensaje util
     public Rol obtenerPorId(Integer id){
-        return rolRepositorio.findById(id).get();
+        return rolRepositorio.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("El rol con id " + id + " no existe"));
     }
 }
